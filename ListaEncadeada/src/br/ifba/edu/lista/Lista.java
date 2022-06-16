@@ -73,6 +73,44 @@ public class Lista {
 		this.totalElementos--;
 	}
 	
+	public void RemoverUltima () {
+		Celula aux = this.cauda;
+		
+		//Outra forma que funcionou:
+		/* Celula aux = this.cabeca;
+		
+		for (int i = 0; i < this.totalElementos - 1; i++) {						
+			aux = aux.getProxima();			
+		}
+		this.cauda = aux; */
+		
+		aux.setProxima(null);
+		this.totalElementos--;
+	}
+	
+	public void RemoverNaPosicao (int posicao) {
+		if (posicao == 0) {
+			this.RemoverPrimeira();
+		}
+		else if (posicao == this.totalElementos) {
+			this.RemoverUltima();
+		}
+		else if (!this.verificar(posicao)) {
+			JOptionPane.showMessageDialog(null, "Posição Inválida", null, JOptionPane.ERROR_MESSAGE);
+			throw new IllegalArgumentException("A posição digitada é inválida");
+		}	
+		else {
+			Celula aux = this.cabeca;
+			
+			for (int i = 0; i < posicao - 1; i++) {						
+				aux = aux.getProxima();			
+			}		
+			
+			aux.setProxima(null);
+			this.totalElementos--;
+		}
+	}
+	
 	public String toString() {		
 		if (this.totalElementos==0) {
 			return"[]";

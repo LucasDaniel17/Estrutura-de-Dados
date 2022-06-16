@@ -33,10 +33,17 @@ public class Principal {
 		lista.adicionaNoFim("Gabriel");		
 		System.out.println("\n" + lista.toString());				
 		
-		lista.adicionarNaPosicao(3, "teste");				
+		lista.adicionarNaPosicao(4, "teste");				
 		System.out.println("\n" + lista.toString());
 		
-		lista.RemoverPrimeira();				
+		lista.RemoverPrimeira();
+		System.out.println("\n" + lista.toString());
 		JOptionPane.showMessageDialog(null, lista.toString());
+		
+		lista.RemoverUltima();
+		System.out.println("\n" + lista.toString());
+		
+		lista.RemoverNaPosicao(1);
+		System.out.println("\n" + lista.toString());				
 	}	
 }
