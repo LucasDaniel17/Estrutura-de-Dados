@@ -14,6 +14,7 @@ public class Celula {
 		this.proxima = proxima;
 		this.objeto = objeto;
 	}
+	
 	public Celula (Object objeto) {
 		this.objeto = objeto;
 	}
@@ -35,5 +36,7 @@ public class Celula {
 	}
 	public void setObjeto(Object objeto) {
 		this.objeto = objeto;
-	}		
+	}
 }
+	
+	

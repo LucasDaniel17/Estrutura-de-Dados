@@ -32,6 +32,7 @@ public class Lista {
 		else {
 			Celula nova = new Celula(obj);
 			this.cauda.setProxima(nova);
+			nova.setAnterior(this.cauda);
 			this.cauda = nova;
 			this.totalElementos++;		
 		}
@@ -60,8 +61,8 @@ public class Lista {
 			for (int i = 0; i < posicao - 1; i++) {						
 				aux = aux.getProxima();			
 			}		
-			Celula nova = new Celula(aux.getAnterior(), aux.getProxima(), obj);
-			nova.setProxima(aux);
+			Celula nova = new Celula(obj);
+			nova.setProxima(aux.getProxima());
 			nova.setAnterior(aux);
 			aux.getProxima().setAnterior(nova);
 			aux.setProxima(nova);
@@ -72,6 +73,8 @@ public class Lista {
 	public void RemoverPrimeira () {				
 		Celula aux = this.cabeca;
 		this.cabeca = this.cabeca.getProxima();
+		
+		aux.setProxima(null);
 		this.cabeca.setAnterior(null);
 		this.totalElementos--;
 	}
@@ -105,10 +108,9 @@ public class Lista {
 				aux = aux.getProxima();			
 			}		
 			
-			aux.setProxima(aux.getProxima());
-			aux.setAnterior(aux.getAnterior());
-			
-			
+			aux.setProxima(aux.getProxima().getProxima());
+			aux.getProxima().getProxima().setAnterior(aux);
+						
 			this.totalElementos--;
 		}
 	}

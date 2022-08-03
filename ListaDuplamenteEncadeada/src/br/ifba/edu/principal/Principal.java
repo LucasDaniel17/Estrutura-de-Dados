@@ -22,7 +22,7 @@ public class Principal {
 		lista.adicionaNoComeco("José");
 		lista.adicionaNoComeco("Camila");
 		lista.adicionaNoComeco("Helena");		
-		System.out.println(lista.toString()); 
+		System.out.println("Add no começo: " + lista.toString()); 
 		
 		lista.adicionaNoFim("Lucas");
 		lista.adicionaNoFim("Jacó");
@@ -31,19 +31,19 @@ public class Principal {
 		lista.adicionaNoFim("Mario");
 		lista.adicionaNoFim("Cirilo");
 		lista.adicionaNoFim("Gabriel");		
-		System.out.println("\n" + lista.toString());				
+		System.out.println("\nAdd no final: " + lista.toString());				
 		
-		lista.adicionarNaPosicao(4, "teste");				
-		System.out.println("\n" + lista.toString());
+		lista.adicionarNaPosicao(3, "teste");				
+		System.out.println("\nAdd na posição: " + lista.toString());
 		
 		lista.RemoverPrimeira();
-		System.out.println("\n" + lista.toString());
-		JOptionPane.showMessageDialog(null, lista.toString());
+		System.out.println("\nRemovendo na primeira: " + lista.toString());
+		// JOptionPane.showMessageDialog(null, lista.toString());
 		
 		lista.RemoverUltima();
-		System.out.println("\n" + lista.toString());
+		System.out.println("\nRemovendo na ultima: " + lista.toString());
 		
-		lista.RemoverNaPosicao(1);
-		System.out.println("\n" + lista.toString());				
+		lista.RemoverNaPosicao(2);
+		System.out.println("\nRemovendo na posição: " + lista.toString());
 	}	
 }
