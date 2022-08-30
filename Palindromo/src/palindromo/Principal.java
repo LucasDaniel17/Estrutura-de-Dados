@@ -8,14 +8,12 @@ public class Principal {
 		
 		Basica b = new Basica();
 		
-		
-		String palavra;
-			
+		String palavra;			
 		
 		System.out.print("Digite a palavra que será testada: ");
 		palavra = input.next();
 		
 		b.inverterPalavra(palavra);
-		System.out.println(b);
+	
 	}
 }
