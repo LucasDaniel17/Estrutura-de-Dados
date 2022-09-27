@@ -27,9 +27,13 @@ public class ColecaoContato {
 	
 	public void update (Contato c) {
 		try {
-			PreparedStatement stmt = Conexao.getConnection().prepareStatement("update contato set nome = ? where id = ?");
+			PreparedStatement stmt = Conexao.getConnection().prepareStatement("update contato set nome = ?, email = ?, fone = ?, celular = ?, id_categoria = ?  where id = ?");
 			stmt.setString(1, c.getNome());
-			stmt.setInt(2, c.getId());
+			stmt.setString(2, c.getEmail());
+			stmt.setString(3, c.getFone());
+			stmt.setString(4, c.getCelular());
+			stmt.setInt(5, c.getCategoria().getId());;
+			stmt.setInt(6, c.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -54,6 +58,34 @@ public class ColecaoContato {
 		
 		try {
 			PreparedStatement stmt = Conexao.getConnection().prepareStatement("select * from contato");			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Contato c = new Contato();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setEmail(rs.getString("email"));
+				c.setFone(rs.getString("fone"));
+				c.setCelular(rs.getString("celular"));
+				c.setCategoria(cc.procurarCategoriaId(rs.getInt("id_categoria")));
+				contatos.add(c);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return contatos;
+	}
+	
+public List<Contato> listarContatoPorCategoria (Categoria cat) {
+		
+		ColecaoCategoria cc = new ColecaoCategoria();
+		
+		List<Contato> contatos = new ArrayList<Contato>();
+		
+		try {
+			PreparedStatement stmt = Conexao.getConnection().prepareStatement("select * from contato where id_categoria = ?");		
+			stmt.setInt(1, cat.getId());
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
