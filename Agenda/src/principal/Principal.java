@@ -32,7 +32,9 @@ public class Principal {
 		c.setCelular("123456789");
 		c.setCategoria(cg.procurarCategoriaId(1));
 		
-		cc.adicionarContato(c);
-		cc.listarContato().forEach(System.out::println);
+		//cc.adicionarContato(c);
+		//cc.listarContato().forEach(System.out::println);
+		//cc.listarContatoPorCategoria();
+		System.out.println(cc.procurarContatoNome("cicero"));
 	}
 }
