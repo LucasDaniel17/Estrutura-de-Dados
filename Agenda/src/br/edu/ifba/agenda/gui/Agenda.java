@@ -33,7 +33,7 @@ public class Agenda extends JFrame {
 	 */
 	public Agenda() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 479, 453);
+		setBounds(100, 100, 479, 473);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -41,7 +41,7 @@ public class Agenda extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		tabbedPane.setBounds(10, 11, 443, 392);
+		tabbedPane.setBounds(10, 11, 443, 413);
 		contentPane.add(tabbedPane);
 		
 		JanelaCategoria j = new JanelaCategoria();
