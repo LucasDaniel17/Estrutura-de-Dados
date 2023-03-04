@@ -1,0 +1,181 @@
+int pin_LDR2 = A3; //sensor de luminosidade do poste
+int luminosidade_externa;
+int LED_externo1 = 8;
+int LED_externo2 = 9;
+
+int solo = 0;
+int pinSolo = A1; //Variavel do sensor do solo
+
+int pinRele = 13;
+
+void setup() {
+  pinMode(pin_LDR2, INPUT); //Define pino sensor de luminosidade do poste como entrada
+  pinMode(LED_externo1, OUTPUT); //define led externo1 como saida
+  pinMode(LED_externo2, OUTPUT); //define led externo2 como saida
+  Serial.begin(9600);
+  pinMode(pinSolo, INPUT); //Define pino sensor do solo como entrada
+  pinMode(pinRele, OUTPUT); //Define pino rele como saída
+}
+
+void loop() {
+lampadaPoste();
+jardim();
+}
+
+void lampadaPoste(){
+  luminosidade_externa = analogRead(pin_LDR2);
+
+  if (luminosidade_externa > 1000){
+    Serial.print("LED_exerteno -> Entrou aqui ");
+    digitalWrite(LED_externo1, HIGH); //Liga led
+    digitalWrite(LED_externo2, HIGH); //Liga led
+  }
+  else {
+    digitalWrite(LED_externo1, LOW); //Desliga led
+    digitalWrite(LED_externo2, LOW); //Desliga led
+  }
+}
+
+void jardim(){
+  solo = map(analogRead(pinSolo), 0, 1023, 0, 100);
+  Serial.println(solo);
+  if(solo > 50){
+    Serial.println("Solo ");
+    digitalWrite(pinRele, HIGH);  
+  } else {
+    digitalWrite(pinRele, LOW);  
+  }
+}
+[21:26, 28/10/2022] Lucas Daniel: int pinSensorEnt = 13;
+int pinSensorSai = 12;
+int pinLed = 10;
+int entrada = 0;
+int saida = 0;
+int contSala = 0;
+
+byte displaySeteSeg[10][7] = { 
+  
+ { 1,1,1,1,1,1,0 },  //DIGITO 0
+ { 0,1,1,0,0,0,0 },  //DIGITO 1
+ { 1,1,0,1,1,0,1 },  //DIGITO 2
+ { 1,1,1,1,0,0,1 },  //DIGITO 3
+ { 0,1,1,0,0,1,1 },  //DIGITO 4
+ { 1,0,1,1,0,1,1 },  //DIGITO 5
+ { 1,0,1,1,1,1,1 },  //DIGITO 6
+ { 1,1,1,0,0,0,0 },  //DIGITO 7
+ { 1,1,1,1,1,1,1 },  //DIGITO 8
+ { 1,1,1,1,0,1,1 }   //DIGITO 9
+ 
+};
+
+void setup() {
+  // put your setup code here, to run once:
+
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10,INPUT);
+  
+  ligaSegmentosDisplay(contSala);
+
+  pinMode(pinSensorEnt, INPUT);
+  pinMode(pinSensorSai, INPUT);
+  pinMode(pinLed, OUTPUT);
+
+  Serial.begin(9600);
+
+  
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+/*Serial.println("=========");
+  digitalWrite(pinLed, HIGH);
+  delay(1000);
+  digitalWrite(pinLed, LOW); 
+  delay(1000);*/
+  entra();
+  saindo();
+  calcular();
+  if(calcular()==0){
+      digitalWrite(pinLed, LOW);
+  }else{
+      digitalWrite(pinLed, HIGH);
+  }
+
+     if(calcular() == 10){ //Se passar de 9 reseta o display para 0
+      contSala = 0;
+      entrada = 0;
+      saida = 0; 
+      ligaSegmentosDisplay(contSala);
+      
+    }
+    else{ //Se não mostra no display o próximo número
+      ligaSegmentosDisplay(contSala);
+    }
+
+}
+
+void entra(){
+   // verifica sensor de entrada
+  if (!digitalRead(pinSensorEnt)) {
+    Serial.println("Entrou aqui");
+    while (digitalRead(pinSensorSai)) {} // aguarda passar pelo sensor   
+     delay(400);
+               
+     entrada++; 
+     Serial.print("Entrou --->");
+     Serial.println(entrada);
+ }
+}
+
+void saindo(){
+   // verifica sensor de entrada
+  if (!digitalRead(pinSensorSai)) {
+       Serial.println("Comecou saindo");
+    while (digitalRead(pinSensorEnt)) {} // aguarda passar pelo sensor   
+     delay(400);          
+     saida++; 
+
+       Serial.print("Saiu --->");
+     Serial.println(saida);
+ }
+}
+
+int calcular(){
+  contSala = entrada-saida;
+  if(contSala == 0){
+    entrada = 0;
+    saida = 0;
+  }
+  if(contSala < 0){
+    contSala = 0;
+     entrada = 0;
+     saida = 0;
+  }
+  if(saida >  entrada){
+     entrada = 0;
+     saida = 0;
+  }
+  Serial.print("Sala :");
+  Serial.println(contSala);
+  return contSala;
+  
+}
+
+void ligaSegmentosDisplay(byte digito){ //função para acionar o display com o digito correspondente
+   
+  byte pino = 2;
+   
+  //Liga os segmentos de acordo com o digito correspondente
+  for (byte contadorSegmentos = 0; contadorSegmentos < 7; ++contadorSegmentos){ 
+    digitalWrite(pino, displaySeteSeg[digito][contadorSegmentos]);
+    ++pino; 
+  }
+}
